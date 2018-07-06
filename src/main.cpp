@@ -102,8 +102,8 @@ int main(int argc, char** argv)
 
 	if (pair_image.cols > 0)
 	{
-		stereo_images[0] = pair_image(cv::Rect(0, 0, pair_image.cols >> 1, pair_image.rows)).clone();
-		stereo_images[1] = pair_image(cv::Rect(pair_image.cols >> 1, 0, pair_image.cols >> 1, pair_image.rows)).clone();
+		stereo_images[0] = pair_image(cv::Rect(pair_image.cols >> 1, 0, pair_image.cols >> 1, pair_image.rows)).clone();
+		stereo_images[1] = pair_image(cv::Rect(0, 0, pair_image.cols >> 1, pair_image.rows)).clone();
 	}
 	else
 	{
@@ -111,13 +111,15 @@ int main(int argc, char** argv)
 		return -1;
 	}
 
-	cv::imshow("stereo image pair", pair_image);
+	cv::imshow("stereo image left", stereo_images[0]);
+	cv::waitKey(16);
+	cv::imshow("stereo image right", stereo_images[1]);
 	cv::waitKey(16);
 
 	// convert to gray scale
 	cv::Mat stereo_images_gray[2];
-	cv::cvtColor(stereo_images[0], stereo_images_gray[0], CV_BGR2GRAY);
-	cv::cvtColor(stereo_images[1], stereo_images_gray[1], CV_BGR2GRAY);
+	cv::cvtColor(stereo_images[0], stereo_images_gray[1], CV_BGR2GRAY);
+	cv::cvtColor(stereo_images[1], stereo_images_gray[0], CV_BGR2GRAY);
 
 	// grid
 	bilateral_grid_simplified grid;
